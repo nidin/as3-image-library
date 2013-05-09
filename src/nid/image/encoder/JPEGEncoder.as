@@ -926,7 +926,7 @@ public class JPEGEncoder
         writeByte(1);		// versionlo
         writeByte(DENSITY_UNIT);		// xyunits
         writeWord(xDENSITY);		// xdensity
-        writeWord(xDENSITY);		// ydensity
+        writeWord(yDENSITY);		// ydensity
         writeByte(0);		// thumbnwidth
         writeByte(0);		// thumbnheight
     }

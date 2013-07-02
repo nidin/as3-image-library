@@ -384,9 +384,9 @@ public class JPEGEncoder
      *  @productversion Flex 3
      */
     public function encodeByteArray(byteArray:ByteArray, width:int, height:int,
-									transparent:Boolean = true):ByteArray
+									transparent:Boolean = true,dpi:Number=0):ByteArray
     {
-        return internalEncode(byteArray, width, height, transparent);
+        return internalEncode(byteArray, width, height, transparent,dpi);
     }
 
 	//--------------------------------------------------------------------------
@@ -581,7 +581,7 @@ public class JPEGEncoder
 		
         // Add JPEG headers
         writeWord(0xFFD8); // SOI
-        writeAPP0();
+        writeAPP0(dpi);
         writeDQT();
         writeSOF0(width, height);
         writeDHT();
@@ -913,7 +913,7 @@ public class JPEGEncoder
     /**
 	 *  @private
 	 */
-    private function writeAPP0():void
+    private function writeAPP0(dpi:Number):void
     {
         writeWord(0xFFE0);	// marker
         writeWord(16);		// length
@@ -924,9 +924,9 @@ public class JPEGEncoder
         writeByte(0);		// = "JFIF",'\0'
         writeByte(1);		// versionhi
         writeByte(1);		// versionlo
-        writeByte(DENSITY_UNIT);		// xyunits
-        writeWord(xDENSITY);		// xdensity
-        writeWord(yDENSITY);		// ydensity
+        writeByte(dpi==0?0:DENSITY_UNIT);		// xyunits
+        writeWord(dpi==0?1:xDENSITY);		// xdensity
+        writeWord(dpi==0?1:yDENSITY);		// ydensity
         writeByte(0);		// thumbnwidth
         writeByte(0);		// thumbnheight
     }

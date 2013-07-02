@@ -27,13 +27,23 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
-			
-			var bitmap:Bitmap = new imgClass();
-			//var png:ByteArray = PNGEncoder.encode(bitmap.bitmapData, 72);
-			//file.save(png, "sample.png");
-			var jpgEncoder:JPEGEncoder = new JPEGEncoder()
-			var jpg:ByteArray = jpgEncoder.encode(bitmap.bitmapData, 300);
 			var file:FileReference = new FileReference();
+			var bitmap:Bitmap = new imgClass();
+			var bmp_ba:ByteArray = bitmap.bitmapData.getPixels(bitmap.bitmapData.rect);
+			
+			/**
+			 * PNG encoder
+			 */
+			//var png:ByteArray = PNGEncoder.encode(bitmap.bitmapData, 72);
+			//var png:ByteArray = PNGEncoder.encodeByteArray(bmp_ba, bitmap.width, bitmap.height, true, 300);
+			//file.save(png, "sample.png");
+			
+			/**
+			 * JPEG encoder
+			 */
+			var jpgEncoder:JPEGEncoder = new JPEGEncoder()
+			//var jpg:ByteArray = jpgEncoder.encode(bitmap.bitmapData, 300);
+			var jpg:ByteArray = jpgEncoder.encodeByteArray(bmp_ba, bitmap.width, bitmap.height,true,300);
 			file.save(jpg, "sample.jpg");
 		}
 		

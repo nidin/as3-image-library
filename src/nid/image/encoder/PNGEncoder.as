@@ -27,10 +27,10 @@ import flash.utils.ByteArray;
 			return internalEncode(bitmapData, bitmapData.width, bitmapData.height,bitmapData.transparent, dpi);
 		}
 
-		public static function encodeByteArray(byteArray:ByteArray, width:int, height:int, transparent:Boolean = true):ByteArray
+		public static function encodeByteArray(byteArray:ByteArray, width:int, height:int, transparent:Boolean = true,dpi:Number=0):ByteArray
 		{
 			initializeCRCTable();
-			return internalEncode(byteArray, width, height, transparent);
+			return internalEncode(byteArray, width, height, transparent,dpi);
 		}
 
 		private static function initializeCRCTable():void
@@ -53,7 +53,7 @@ import flash.utils.ByteArray;
 			}
 		}
 
-		private static function internalEncode(source:*, width:int, height:int, transparent:Boolean, dpi:Number=0):ByteArray
+		private static function internalEncode(source:*, width:int, height:int, transparent:Boolean, dpi:Number):ByteArray
 		{
 			// The source is either a BitmapData or a ByteArray.
 			var sourceBitmapData:BitmapData = source as BitmapData;
@@ -81,7 +81,7 @@ import flash.utils.ByteArray;
 			writeChunk(png, 0x49484452, IHDR);
 			if (dpi > 0)
 			{
-				var pHYs:ByteArray = new ByteArray();\
+				var pHYs:ByteArray = new ByteArray();
 				dpi = dpi / 0.0254;
 				pHYs.writeUnsignedInt(dpi);//Pixels per unit, X axis
 				pHYs.writeUnsignedInt(dpi);//Pixels per unit, Y axis

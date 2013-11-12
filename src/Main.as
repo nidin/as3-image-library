@@ -1,12 +1,16 @@
 package 
 {
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.net.FileReference;
 	import flash.utils.ByteArray;
 	import nid.image.encoder.JPEGEncoder;
 	import nid.image.encoder.PNGEncoder;
+	import nid.image.tools.BitmapMergeUtils;
 	
 	/**
 	 * ...
@@ -14,8 +18,11 @@ package
 	 */
 	public class Main extends Sprite 
 	{
-		[Embed(source = "../asset/Penguins.jpg")]
-		private var imgClass:Class;
+		[Embed(source="../asset/Tranparant_smile.png")]
+		private var img1Class:Class;
+		
+		[Embed(source="../asset/Gradient_ARGB.png")]
+		private var img2Class:Class;
 		
 		public function Main():void 
 		{
@@ -27,9 +34,18 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
+			
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			
 			var file:FileReference = new FileReference();
-			var bitmap:Bitmap = new imgClass();
-			var bmp_ba:ByteArray = bitmap.bitmapData.getPixels(bitmap.bitmapData.rect);
+			var bitmap1:Bitmap = new img1Class();
+			var bitmap2:Bitmap = new img2Class();
+			var bmp_ba:ByteArray = bitmap1.bitmapData.getPixels(bitmap1.bitmapData.rect);
+			
+			var merged:BitmapData = BitmapMergeUtils.merge(bitmap1.bitmapData, bitmap2.bitmapData);
+			var mergedBmp:Bitmap = new Bitmap(merged);
+			addChild(mergedBmp);
 			
 			/**
 			 * PNG encoder
@@ -41,10 +57,10 @@ package
 			/**
 			 * JPEG encoder
 			 */
-			var jpgEncoder:JPEGEncoder = new JPEGEncoder()
+			//var jpgEncoder:JPEGEncoder = new JPEGEncoder()
 			//var jpg:ByteArray = jpgEncoder.encode(bitmap.bitmapData, 300);
-			var jpg:ByteArray = jpgEncoder.encodeByteArray(bmp_ba, bitmap.width, bitmap.height,true,300);
-			file.save(jpg, "sample.jpg");
+			//var jpg:ByteArray = jpgEncoder.encodeByteArray(bmp_ba, bitmap.width, bitmap.height,true,300);
+			//file.save(jpg, "sample.jpg");
 		}
 		
 	}

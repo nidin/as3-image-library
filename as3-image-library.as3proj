@@ -5,11 +5,11 @@
     <movie outputType="Application" />
     <movie input="" />
     <movie path="bin\as3imagelibrary.swf" />
-    <movie fps="30" />
+    <movie fps="60" />
     <movie width="800" />
     <movie height="600" />
-    <movie version="10" />
-    <movie minorVersion="1" />
+    <movie version="11" />
+    <movie minorVersion="4" />
     <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
   </output>

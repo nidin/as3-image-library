@@ -8,6 +8,7 @@ package
 	import flash.events.Event;
 	import flash.net.FileReference;
 	import flash.utils.ByteArray;
+	import nid.image.encoder.Encoder;
 	import nid.image.encoder.JPEGEncoder;
 	import nid.image.encoder.PNGEncoder;
 	import nid.image.tools.BitmapMergeUtils;
@@ -23,6 +24,8 @@ package
 		
 		[Embed(source="../asset/Gradient_ARGB.png")]
 		private var img2Class:Class;
+		
+		private var file:FileReference;
 		
 		public function Main():void 
 		{
@@ -50,7 +53,7 @@ package
 			/**
 			 * PNG encoder
 			 */
-			//var png:ByteArray = PNGEncoder.encode(bitmap.bitmapData, 72);
+			//var png:ByteArray = PNGEncoder.encode(merged, 300);
 			//var png:ByteArray = PNGEncoder.encodeByteArray(bmp_ba, bitmap.width, bitmap.height, true, 300);
 			//file.save(png, "sample.png");
 			
@@ -61,6 +64,20 @@ package
 			//var jpg:ByteArray = jpgEncoder.encode(bitmap.bitmapData, 300);
 			//var jpg:ByteArray = jpgEncoder.encodeByteArray(bmp_ba, bitmap.width, bitmap.height,true,300);
 			//file.save(jpg, "sample.jpg");
+			
+			/**
+			 * EncodeWorker
+			 */
+			trace('Encoder Master');
+			var encoder:Encoder = new Encoder();
+			encoder.encodePNGAsync(merged, onComplete, 300);
+		}
+		
+		private function onComplete(result:ByteArray):void 
+		{
+			trace('onComplete', result.length);
+			file = new FileReference();
+			file.save(result, "sample.png");
 		}
 		
 	}
